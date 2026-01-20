@@ -1,37 +1,192 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="assests/css/style.css" />
     <title>Task Manager</title>
-  </head>
-  <body>
+    <!-- Google Fonts for professional typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            min-height: 100vh;
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+
+        main {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .container {
+            width: 100%;
+        }
+
+        /* Task Container - Modern Card Look */
+        .task__container {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+
+        /* Form Styling */
+        .taskInput {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #f3f4f6;
+        }
+
+        .taskInput h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            text-align: center;
+        }
+
+        .title, .note {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.025em;
+        }
+
+        input[type="text"] {
+            padding: 0.75rem 1rem;
+            border: 1.5px solid #e5e7eb;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            outline: none;
+            background: #f9fafb;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--primary);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+        }
+
+        /* Button Styling */
+        .btn {
+            background: var(--primary);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.1s, background 0.2s;
+            box-shadow: 0 4px 6px -1px rgba(79, 70, 229, 0.2);
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        /* Output Area */
+        .task__output {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        /* Individual Task Card (Targeted via JS typically) */
+        .task-item { /* Added for demonstration, JS usually injects these */
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 1rem;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Toastify (Notification Area) */
+        .tostify {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .task__container {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
     <main>
-      <section>
-        <div class="container">
-          <div class="task__container">
-            <form action="#" class="taskInput" name="tasks">
-              <h2>Add Task</h2>
-              <div class="title">
-                <label for="taskName">Tittle</label>
-                <input type="text" class="taskName" name="taskName" />
-              </div>
-              <div class="note">
-                <label for="taskValue">Note</label>
-                <input type="text" class="taskValue" name="taskValue" />
-              </div>
-              <button class="btn">Submit</button>
-            </form>
-            <div class="task__output">
-              
+        <section>
+            <div class="container">
+                <div class="task__container">
+                    <form action="#" class="taskInput" name="tasks">
+                        <h2>✨ Task Manager</h2>
+                        <div class="title">
+                            <label for="taskName">Title</label>
+                            <input type="text" id="taskName" class="taskName" name="taskName" placeholder="What needs to be done?" />
+                        </div>
+                        <div class="note">
+                            <label for="taskValue">Note</label>
+                            <input type="text" id="taskValue" class="taskValue" name="taskValue" placeholder="Add some details..." />
+                        </div>
+                        <button type="submit" class="btn">Add Task</button>
+                    </form>
+                    
+                    <div class="task__output">
+                        <!-- Tasks will appear here via your JS -->
+                         <div style="text-align: center; color: #9ca3af; font-size: 0.9rem;">Your tasks will be listed here</div>
+                    </div>
+                </div>
             </div>
-          </div>
+        </section>
+        
+        <div class="tostify">
+            <!-- JS Toast messages will appear here -->
         </div>
-      </section>
-      <div class="tostify">
-      </div>
     </main>
-  </body>
-  <script src="assests/js/script.js"></script>
+</body>
+<!-- Make sure your path to script.js is correct -->
+<script src="assests/js/script.js"></script>
 </html>
